@@ -11,34 +11,37 @@
     
 
     #results {
-      width: 880px;
+      width: 1024px;
       margin: 20px auto;
       padding: 20px;
       background-color: grey;
       border-radius: 8px;
-      font-family: Helvetica, Verdana, Arial, sans-serif;          
+      font-family: Helvetica, Verdana, Arial, sans-serif; 
+      float:auto;
+               
     }
 
     .result {
       background-color: whitesmoke;
-      font-size: 0.88em;
+      font-size: 0.84em;      
       padding: 3px 10px;
       margin: 3px 0;
       border-radius: 8px;
+      
     }
 
     #commands {
       margin: 30px 0 0 0;
       padding: 5px 15px;
       background-color: white;
-      text-align:right;
+      text-align: right;
       border-radius: 8px;
     }
     
     
     
       #container {
-      width: 800px;
+      width: 640px;
       margin: 25px auto;
       padding: 25px;
       background-color: darkgray;
@@ -63,4 +66,22 @@
       background-color: lightgray;
       margin: 0;
       padding: 5px 15px;
+    }
+    
+    span {
+    margin: 0 6px;
+        
+    }
+
+    span:first-of-type{
+    margin-left: 6;
+    }
+
+    span:last-of-type{
+    margin-right: 0;
+    float:right;
+    }
+    
+    span.main-coloumn {
+    display: inline-block; width: 450px;
     }
