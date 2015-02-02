@@ -1,0 +1,9 @@
+<?php  //βάζουμε πεδίο κειμένου για το ID μόνο στο update (το χρειαζόμαστε!)
+      //επίσης το κάνουμε read-only γιατί δεν πρέπει να μεταβληθεί.
+ if ($_GET['mode'] == 'update') { ?>
+
+  <input name="schoolID" value="<?php echo $schoolID; ?>" readonly="readonly" hidden />
+  <input name="subjectID" value="<?php echo $subjectID; ?>" readonly="readonly" hidden />
+  <input name="teachMethodID_byTeachMethods" value="<?php echo $teachMethodID_byTeachMethods; ?>" readonly="readonly" hidden />
+
+<?php   }  ?>
