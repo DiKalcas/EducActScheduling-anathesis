@@ -7,60 +7,55 @@
 
 
   
-      // προσδιορισμός λειτουργίας φόρμας - ΠΕΡΙΠΤΩΣΗ UPDATE
+      // determination of the function use, case of update
   if ( isset($_GET['mode'], $_GET['id'] ) &&  $_GET['mode']=='update'  ) {
-
-
-    $title='μεταβολή εγγραφής πίνακα από διαχειριστή!';
 
     $professorTitleID=$_GET['id'];  //το ID της εγγραφής που θα μεταβάλλουμε
 
-    //εύρεση εγγραφής που θέλουμε να μεταβάλουμε
+    $title="μεταβολή εγγραφής Νο $professorTitleID από διαχειριστή!";
+    // finding of the record to update it
     try {
-      //αρχικοποίηση PDO
+      //initialization of PDObject
       $pdoObject = new PDO("mysql:host=$dbhost;dbname=$dbname;", $dbuser, $dbpass);
       $pdoObject -> exec('set names utf8');
-      //παραμετρικό ερώτημα γιατί ενσωματώνουμε data που έστειλε ο χρήστης
+      // parameterized query with data sent by user
       $sql = "SELECT * FROM professortitles WHERE professorTitleID=:professorTitleID LIMIT 1";
       //compile ερωτήματος στον database server
       $statement= $pdoObject->prepare($sql);
-      //πέρασμα τιμών στις παραμέτρους και εκτέλεση
+      // passing values at parameters placeholders and execute
       $statement->execute( array( ':professorTitleID'=>$professorTitleID ));
-      //περιμένουμε ΜΙΑ ΜΟΝΟ εγγραφή στα αποτελέσματα
-      if ($record= $statement->fetch()) { //εφόσον βρέθηκε η εγγραφή
-        //το σημειώνουμε για μετά
+      // one record for query result
+      if ($record= $statement->fetch()) { //upon record finding
+        // save the result for later
         $record_exists=true;
-        //καταχωρούμε τις τρέχουσες τιμές στις μεταβλητές αρχικοποίησης της φόρμας
+        // pass the recorded fields to the init. values
         //$businessID=  το έχουμε ήδη ορίσει παραπάνω - το ξέρουμε από το URL
         $titleName=        $record['titleName'];
         $weekTeachHours=   $record['weekTeachHours'];
         $isStanding=       $record['isStanding'];
         $otherDetails=     $record['otherDetails'];
                
-      } else $record_exists=false;  //σημειώνουμε ότι δεν βρέθηκε
-      //κλείσιμο PDO
+      } else $record_exists=false;  // not existing record Flag state
+      // closing of query statement and clearing of PDObject
       $statement->closeCursor();
       $pdoObject= null;
     } catch (PDOException $e) {
         print "Database Error: " . $e->getMessage();
-        // η εντολή die παρακάτω, διακόπτει την εκτέλεση του κώδικα με βίαιο τρόπο
-        // και τυπώνει τυχόν κείμενο - καλύτερα όμως ανακατεύθυνση σε σελίδα error
+
         die("Αδυναμία δημιουργίας PDO Object");
     }
 
-    //Αν δε βρέθηκε η εγγραφή πρέπει να αποφασίσουμε τι θα κάνουμε. Προφανώς
-    //δεν μπορούμε να κάνουμε update. Έστω ανακατευθύνουμε....
     if (!$record_exists) {
       header('Location: index.php?msg=Record does not exist.');
       exit();
     }
   }
-      //προσδιορισμός λειτουργίας φόρμας - ΠΕΡΙΠΤΩΣΗ INSERT
+      // determination of the function use, case of insert
   if ( isset($_GET['mode'] ) &&  $_GET['mode'] == 'insert'  ) {
-    $title='εισαγωγή εγγραφής πίνακα από διαχειριστή!';
-    //καταχωρούμε τις τρέχουσες τιμές στις μεταβλητές αρχικοποίησης της φόρμας 
+    $title='εισαγωγή ΝΕΑΣ εγγραφής από διαχειριστή!';
+    // pass the recorded fields to the init. values 
     $professorTitleID= '';
-    $titleName= '';
+    $titleName= 'ΕΚΠΑΙΔΕΥΤΙΚΟΣ';
     $weekTeachHours= 1;
     $isStanding= 'ΟΧΙ';
     $otherDetails= 'Τίτλος εκπαιδευτικού προσωπικού';
@@ -85,27 +80,26 @@
     <form name="form1" action="dualformhandler.php" method="post">
 
     <?php
-      //βάζουμε πεδίο κειμένου για το businessID μόνο στο update (το χρειαζόμαστε!)
-      //επίσης το κάνουμε read-only γιατί δεν πρέπει να μεταβληθεί.
+      //in case of update, pass the ~ID to the form field of it
+      //the form field have read-only and hidden attributes
       if ($_GET['mode'] == 'update') { ?>
 
-        <p>Κωδικός: <input name="professorTitleID" value="<?php echo $professorTitleID; ?>" readonly="readonly" /></p>
+       <input name="professorTitleID" value="<?php echo $professorTitleID; ?>" readonly="readonly" hidden />
 
-    <?php  //ΕΔΩ ΚΛΕΙΝΕΙ ΤΟ ΠΡΟΗΓΟΥΜΕΝΟ IF
+    <?php                            } ?>  
 
-      //ΠΡΟΣΟΧΗ: 
-
-     } ?>
-
-
-      <p>Ονομασία τίτλου            : <input type="text"   name="titleName"      value="<?php echo $titleName; ?>" /></p>
-      <p>Ώρες εβδομαδιαίας εργασίας : <input type="number" name="weekTeachHours" value="<?php echo $weekTeachHours; ?>"/></p>
-      <p>Μονιμότητα                 : <input type="radio" name="isStanding"     value="ΟΧΙ"  />            ΟΧΙ
-                                      <input type="radio" name="isStanding"      value="ΝΑΙ" />            ΝΑΙ         </p>
-      <p>Λεπτομέριες                : <input type="text"   name="otherDetails"   value="<?php echo $otherDetails; ?>" /></p>
+      <p>Ονομασία τίτλου:            <input type="text" size="64"   name="titleName"     value="<?php echo $titleName; ?>" /></p>
+      <p>Ώρες εβδομαδιαίας εργασίας: <input type="number" size="3" name="weekTeachHours" value="<?php echo $weekTeachHours; ?>"/>
+          &nbsp|&nbsp Μονιμότητα:    <input type="radio" name="isStanding"     value="ΟΧΙ"  checked     />        ΟΧΙ
+    <?php if ( $isStanding == "ΝΑΙ" ) { ?>  
+                                      <input type="radio" name="isStanding"      value="ΝΑΙ" checked    />        ΝΑΙ  </p>
+    <?php } else { ?>
+                                      <input type="radio" name="isStanding"      value="ΝΑΙ"          />        ΝΑΙ  </p>
+    <?php        } ?>                                  
+      <p>Λεπτομέριες: <input type="text"  size="64"  name="otherDetails"   value="<?php echo $otherDetails; ?>" /></p>
                                         
       
-      <p> <input type="reset"/><input type="submit"/></p>
+      <p><span><input type="reset"/></span><span><input type="submit"/></span></p>
     </form>
     </fieldset>
 

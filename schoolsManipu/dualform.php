@@ -2,66 +2,54 @@
  require('../parameteDB.php'); //για στοιχεία σύνδεσης σε MySQL
  require('../functions.php'); //βοηθητική συνάρτηση πλήρωσης λίστας από πίνακα
  require('../errors.php');   //μυνήματα λάθους
-                  // προσδιορισμός λειτουργίας φόρμας - ΠΕΡΙΠΤΩΣΗ UPDATE
+                  // determination of the function use, case of update
  if ( isset($_GET['mode'], $_GET['id1'], $_GET['id2'] ) &&  $_GET['mode']=='update'  ) 
  {
-  $title='μεταβολή εγγραφής πίνακα από διαχειριστή!';
-  $schoolID= $_GET['id1'];            //το ID της εγγραφής
-  $locationAddressID= $_GET['id2'];  //  που θα μεταβάλλουμε
-      //εύρεση εγγραφής που θέλουμε να μεταβάλουμε
-  try {         //αρχικοποίηση PDO
+  
+  $schoolID=                           $_GET['id1'];   //το ID της εγγραφής
+  $locatAddressID_byLocationAddresses= $_GET['id2'];  //  που θα μεταβάλλουμε
+  $title=  "εγγραφή No $schoolID μεταβολή από διαχειριστή!";
+      // finding of the record to update it
+  try {         //initialization of PDObject
    $pdoObject= new PDO("mysql:host=$dbhost;dbname=$dbname;", $dbuser, $dbpass);
    $pdoObject->exec('set names utf8');
-      //παραμετρικό ερώτημα γιατί ενσωματώνουμε data που έστειλε ο χρήστης
-   $sql1= "SELECT * FROM schools WHERE schoolID=:schoolID LIMIT 1";
-   $sql2= "SELECT * FROM locationaddresses WHERE locationAddressID=:locationAddressID LIMIT 1";
+      // parameterized query with data sent by user
+   $sql= "SELECT * FROM schools WHERE schoolID=:schoolID LIMIT 1";
          //compile ερωτήματος στον database server
-   $statement1= $pdoObject->prepare($sql1);
-   $statement2= $pdoObject->prepare($sql2);
-      //πέρασμα τιμών στις παραμέτρους και εκτέλεση
-   $statement1->execute( array( ':schoolID'=>$schoolID ));
-   $statement2->execute( array( ':locationAddressID'=>$locationAddressID ));
-             //περιμένουμε ΜΙΑ ΜΟΝΟ εγγραφή στα αποτελέσματα
-   if ( $record= $statement1->fetch() ) 
-   {   //εφόσον βρέθηκε η εγγραφή
-      //το σημειώνουμε για μετά
+   $statement= $pdoObject->prepare($sql);
+      // passing values at parameters placeholders and execute
+   $statement->execute( array( ':schoolID'=>$schoolID ));
+             // one record for query result
+   if ( $record= $statement->fetch() ) 
+   {   //upon record finding
+      // save the result for later
     $record_exists=true;
-         //καταχωρούμε τις τρέχουσες τιμές στις μεταβλητές αρχικοποίησης της φόρμας
-        //$businessID=  το έχουμε ήδη ορίσει παραπάνω - το ξέρουμε από το URL
-    $schoolSectionName= $record[ 'schoolSectionName' ];
+         // pass the recorded fields to the init. values
+        //$___ID=  το έχουμε ήδη ορίσει παραπάνω - το ξέρουμε από το URL
+    $schoolSectionName=                  $record[ 'schoolSectionName' ];
+    $schoolSectionAbbrev=                $record[ 'schoolSectionAbbrev' ];
+    $locatAddressID_byLocationAddresses= $record[ 'locatAddressID_byLocationAddresses' ];
     
    }
-   else $record_exists=false;  //σημειώνουμε ότι δεν βρέθηκε
-               //περιμένουμε ΜΙΑ ΜΟΝΟ εγγραφή στα αποτελέσματα
-   if ( $record= $statement2->fetch() ) 
-   {   //εφόσον βρέθηκε η εγγραφή
-      //το σημειώνουμε για μετά
-    $record_exists=true;
-         //καταχωρούμε τις τρέχουσες τιμές στις μεταβλητές αρχικοποίησης της φόρμας
-        //$businessID=  το έχουμε ήδη ορίσει παραπάνω - το ξέρουμε από το URL
-     $locationAddressID= $record['locationAddressID'];
-     $area= $record[ 'area' ];
-     $city= $record[ 'city' ];
-     $address= $record[ 'address' ];
-   }
-   else $record_exists=false;  //σημειώνουμε ότι δεν βρέθηκε
-         //κλείσιμο PDO
-      $statement2->closeCursor();
+   else $record_exists=false;  // not existing record Flag state
+         // closing of query statement and clearing of PDObject
+      $statement->closeCursor();
       $pdoObject= null;
   }
    catch ( PDOexception $e ) { 
    print "Database Error: " . $e->getMessage();
-         // η εντολή die παρακάτω, διακόπτει την εκτέλεση του κώδικα με βίαιο τρόπο
-        // και τυπώνει τυχόν κείμενο - καλύτερα όμως ανακατεύθυνση σε σελίδα error
+
    die("Αδυναμία δημιουργίας PDO Object");
   }
  }
-                  //προσδιορισμός λειτουργίας φόρμας - ΠΕΡΙΠΤΩΣΗ INSERT
+                  // determination of the function use, case of insert
  if ( isset($_GET['mode'] ) &&  $_GET['mode']=='insert'  ) {
-    $title='Εισαγωγή';
-    //καταχωρούμε τις τρέχουσες τιμές στις μεταβλητές αρχικοποίησης της φόρμας 
-    $schoolID='';
-    $schoolSectionName='';
+    $title='εισαγωγή εγγραφής τμήματος(σχολής) από διαχειριστή!';
+             //pass default values to form init. variables 
+    $schoolID=                           '';
+    $schoolSectionName=                  '';
+    $schoolSectionAbbrev=                '';
+    $locatAddressID_byLocationAddresses= '';
     
   }  
 ?>
@@ -77,47 +65,41 @@
  <div id="container">
   <h2 class="center"><?php echo $title; ?></h2>
   <br />
-  <fieldset><legend>ΕΙΣΑΓΩΓΗ ΕΓΓΡΑΦΗΣ - ΤΜΗΜΑΤΟΣ ΣΧΟΛΗΣ ΤΕΙ</legend>
+  <fieldset><legend>ΟΝΟΜΑΣΙΑ ΤΜΗΜΑΤΟΣ ΣΧΟΛΗΣ ΤΕΙ</legend>
   <form name="form1" action="dualformhandler.php" method="post">
 
-<?php  //βάζουμε πεδίο κειμένου για το ID μόνο στο update (το χρειαζόμαστε!)
-      //επίσης το κάνουμε read-only γιατί δεν πρέπει να μεταβληθεί.
- if ($_GET['mode'] == 'update') 
-  { 
-?>
+<?php  //in case of update, pass the ~ID to the form field of it
+      //the form field have read-only and hidden attributes
+ if ($_GET['mode'] == 'update') { ?>
 
-<p>Κωδικός: <input name="schoolID" value="<?php echo $schoolID; ?>" readonly="readonly" /></p>
+  <input name="schoolID" value="<?php echo $schoolID; ?>" readonly="readonly" hidden />
 
-<?php  //ΕΔΩ ΚΛΕΙΝΕΙ ΤΟ ΠΡΟΗΓΟΥΜΕΝΟ IF 
-  }
-?>
+<?php   }  ?>
 
-  <p>Τίτλος Τμήματος σχολής Τ.Ε.Ι.(ΣΧΟΛΗ): <input type="text"  size="44"  name="schoolSectionName"      value="<?php echo $schoolSectionName; ?>" /></p>
-  <p> <input type="reset"/><input type="submit"/></p>
-  </form>  
-  </fieldset>
-  <fieldset><legend>ΕΙΣΑΓΩΓΗ ΕΓΓΡΑΦΗΣ - ΔΙΕΥΘΗΝΣΗΣ ΤΜΗΜΑΤΟΣ ΣΧΟΛΗΣ ΤΕΙ</legend>
-  <form name="form1" action="dualformhandler.php" method="post">
+  <p>Τίτλος Τμήματος σχολής Τ.Ε.Ι.(ΣΧΟΛΗ): <input type="text"  size="82"  name="schoolSectionName"  
+     placeholder="ΣΧΕΔΙΑΣΜΟΥ ΚΑΙ ΤΕΧΝΟΛΟΓΙΑΣ ΞΥΛΟΥ ΚΑΙ ΕΠΙΠΛΟΥ Τ.Ε. Τμήμα(ΣΤΕΦ)"   value="<?php echo $schoolSectionName; ?>" /></p>
+  <p>Συντομογραφία τίτλου σχολής: <input type="text"  size="32"  name="schoolSectionAbbrev"  
+     placeholder="Σχεδιασ.Τεχνολ.Ξύλου&Επίπλου"   value="<?php echo $schoolSectionAbbrev; ?>" /></p>
 
-<?php  //βάζουμε πεδίο κειμένου για το ID μόνο στο update (το χρειαζόμαστε!)
-      //επίσης το κάνουμε read-only γιατί δεν πρέπει να μεταβληθεί.
- if ($_GET['mode'] == 'update') 
-  { 
-?>
+   <input type="radio" name="locatAddressID_byLocationAddresses"    value="1001"  checked     />  Έδρα σχολής Λάρισα &nbsp&nbsp|&nbsp  
 
-<p>Κωδικός: <input name="locationAddressID" value="<?php echo $locationAddressID; ?>" readonly="readonly" /></p>
+<?php if ( $locatAddressID_byLocationAddresses == 1002 ) { ?>  
+                          <input type="radio" name="locatAddressID_byLocationAddresses"     value="1002" checked    />  Έδρα σχολής Τρίκαλα &nbsp&nbsp|&nbsp 
+<?php } else { ?>
+                          <input type="radio" name="locatAddressID_byLocationAddresses"      value="1002"          />   Έδρα σχολής Τρίκαλα &nbsp&nbsp|&nbsp   
+<?php        } ?>
 
-<?php  //ΕΔΩ ΚΛΕΙΝΕΙ ΤΟ ΠΡΟΗΓΟΥΜΕΝΟ IF 
-  }
-?>
-
-  <p>Πόλη που εδρεύει το Τμήμα σχολής: <input type="text"  size="44"  name="city" value="<?php echo $city; ?>" /></p>
-  <p>Περιοχή της πόλης του Τμήματος:   <input type="text"  size="44"  name="area" value="<?php echo $area; ?>" /></p>
-  <p>Διεύθηνση του Τμήματος:       <input type="text"  size="44"   name="address" value="<?php echo $address; ?>" /></p>  
-  <p> <input type="reset"/><input type="submit"/></p>
+<?php  if ( $locatAddressID_byLocationAddresses == 1003 ) { ?>  
+                          <input type="radio" name="locatAddressID_byLocationAddresses"     value="1003" checked    />   Έδρα σχολής Καρδίτσα 
+<?php } else { ?>
+                          <input type="radio" name="locatAddressID_byLocationAddresses"      value="1003"          />    Έδρα σχολής Καρδίτσα   
+<?php        } ?>
+  
+  <p><span><input type="reset"/></span><span><input type="submit"/></span></p>
   </form>  
   </fieldset>
   <p class="right"><a href="index.php">Αρχική Σελίδα</a></p>
  </div> 
 </body>
 </html>
+

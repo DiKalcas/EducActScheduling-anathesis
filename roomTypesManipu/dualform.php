@@ -2,53 +2,52 @@
  require('../parameteDB.php'); //για στοιχεία σύνδεσης σε MySQL
  require('../functions.php'); //βοηθητική συνάρτηση πλήρωσης λίστας από πίνακα
  require('../errors.php');   //μυνήματα λάθους
-      // προσδιορισμός λειτουργίας φόρμας - ΠΕΡΙΠΤΩΣΗ UPDATE
+      // determination of the function use, case of update
  if ( isset($_GET['mode'], $_GET['id'] ) &&  $_GET['mode']=='update'  ) 
  {
   $title='μεταβολή εγγραφής πίνακα από διαχειριστή!';
   $roomTypeID=$_GET['id'];  //το ID της εγγραφής που θα μεταβάλλουμε
-      //εύρεση εγγραφής που θέλουμε να μεταβάλουμε
+      // finding of the record to update it
   try 
   {
-         //αρχικοποίηση PDO
+         //initialization of PDObject
    $pdoObject = new PDO("mysql:host=$dbhost;dbname=$dbname;", $dbuser, $dbpass);
    $pdoObject->exec('set names utf8');
-      //παραμετρικό ερώτημα γιατί ενσωματώνουμε data που έστειλε ο χρήστης
+      // parameterized query with data sent by user
    $sql = "SELECT * FROM roomtypes WHERE roomTypeID=:roomTypeID LIMIT 1";
          //compile ερωτήματος στον database server
    $statement= $pdoObject->prepare($sql);
-      //πέρασμα τιμών στις παραμέτρους και εκτέλεση
+      // passing values at parameters placeholders and execute
    $statement->execute( array( ':roomTypeID'=>$roomTypeID ));
-         //περιμένουμε ΜΙΑ ΜΟΝΟ εγγραφή στα αποτελέσματα
+         // one record for query result
    if ( $record= $statement->fetch() ) 
-   {   //εφόσον βρέθηκε η εγγραφή
-      //το σημειώνουμε για μετά
+   {   //upon record finding
+      // save the result for later
     $record_exists=true;
-            //καταχωρούμε τις τρέχουσες τιμές στις μεταβλητές αρχικοποίησης της φόρμας
+            // pass the recorded fields to the init. values
         //$businessID=  το έχουμε ήδη ορίσει παραπάνω - το ξέρουμε από το URL
     $roomTitle=    $record['roomTitle'];
     $roomCapacity= $record['roomCapacity'];
     $roomEquipment= $record['roomEquipment'];
     $otherDetails=  $record['otherDetails'];
-   } else $record_exists=false;  //σημειώνουμε ότι δεν βρέθηκε
-      //κλείσιμο PDO
+   } else $record_exists=false;  // not existing record Flag state
+      // closing of query statement and clearing of PDObject
     $statement->closeCursor();
     $pdoObject= null;
   }
    catch ( PDOexception $e )
   { 
    print "Database Error: " . $e->getMessage();
-         // η εντολή die παρακάτω, διακόπτει την εκτέλεση του κώδικα με βίαιο τρόπο
-        // και τυπώνει τυχόν κείμενο - καλύτερα όμως ανακατεύθυνση σε σελίδα error
+
    die("Αδυναμία δημιουργίας PDO Object");
   }
  }
-     //προσδιορισμός λειτουργίας φόρμας - ΠΕΡΙΠΤΩΣΗ INSERT
+     // determination of the function use, case of insert
  if ( isset($_GET['mode'] ) &&  $_GET['mode'] == 'insert'  ) {
   $title='εισαγωγή εγγραφής πίνακα από διαχειριστή!';
-    //καταχωρούμε τις τρέχουσες τιμές στις μεταβλητές αρχικοποίησης της φόρμας 
+    // pass the recorded fields to the init. values 
   $roomTypeID=    '';
-  $roomTitle=     '';
+  $roomTitle=     'ΑΙΘΟΥΣΑ ΔΙΔΑΣΚΑΛΙΑΣ';
   $roomCapacity=  3;
   $roomEquipment= 'Βασικός';
   $otherDetails=  'Γενικός τύπος Αίθουσας διδασκαλίας';
@@ -70,8 +69,8 @@
   <fieldset><legend>ΕΙΣΑΓΩΓΗ ΕΓΓΡΑΦΗΣ - ΤΥΠΩΝ ΑΙΘΟΥΣΩΝ ΔΙΔΑΣΚΑΛΙΑΣ</legend>
   <form name="form1" action="dualformhandler.php" method="post">
 
-<?php  //βάζουμε πεδίο κειμένου για το ID μόνο στο update (το χρειαζόμαστε!)
-      //επίσης το κάνουμε read-only γιατί δεν πρέπει να μεταβληθεί.
+<?php  //in case of update, pass the ~ID to the form field of it
+      //the form field have read-only and hidden attributes
  if ($_GET['mode'] == 'update') 
   { 
 ?>

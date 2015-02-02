@@ -16,57 +16,43 @@
 
 <div id="results">
   <p class="center">
-    [ ΚΩΔΙΚΟΣ - ΟΝΟΜΑΣΙΑ_ΤΙΤΛΟΥ - ΩΡΕΣ_ΕΒΔΟΜ._ΕΡΓΑΣΙΑΣ - ΜΟΝΙΜΟΤΗΤΑ - ΛΕΠΤΟΜΕΡΙΕΣ ]
+    [ ΚΩΔΙΚΟΣ | ΟΝΟΜΑΣΙΑ ΤΙΤΛΟΥ | ΩΡΕΣ ΕΒΔΟΜ. ΕΡΓΑΣΙΑΣ | ΜΟΝΙΜΟΤΗΤΑ | ΛΕΠΤΟΜΕΡΙΕΣ ]
   </p>
 
 <?php
-  // ενσωμάτωση παραμέτρων σύνδεσης στην database
-  require_once('..\parameteDB.php');
+  require_once('..\parameteDB.php');//the database connection param.
 
-  try {
-    // ενεργοποίηση της υποδομής PDO για διασύνδεση PHP και MySQL
+  try {// activation of PDO
     $pdoObject = new PDO("mysql:host=$dbhost; dbname=$dbname;", $dbuser, $dbpass);
     $pdoObject -> exec('set names utf8');
 
-     // διατύπωση SQL ερωτήματος - ΧΩΡΙΣ PDO μεταβλητές
-    //professorTitleID, titleName, weekTeachHours, isStanding, otherDetails
     $sql = 'SELECT *
             FROM professorTitles';
     
-       // απευθείας εκτέλεση του ερωτήματος - χωρίς PDO μεταβλητές και prepare
-      // Δεν κάνουμε prepare γιατί δεν υπάρχουν παράμετροι προερχόμενες από
-     // εξωτερικό χρήστη ώστε να απαιτούνται μέτρα προστασίας από sql injection
     $statement= $pdoObject->query($sql);
  
-      // στο αντικέιμενο $statement υπάρχουν τα αποτελέσματα του ερωτήματος
-     // κατανάλωση απότελεσμάτων - θα τυπώσουμε λίστα με τα καταστήματα
     $recoCounter= 0;
     while ( $record= $statement->fetch() ) {
-
-      // μια τυπική γραμμή που θέλουμε να φτιάξουμε είναι η ακόλουθη
-      // <p class="result">Όλυμπος - Ταβέρνα <a href="dualform.php?mode=update&id=2"><img src="edit.png"/></a> </p>
 
       $recoCounter++;
       echo '<p class="result">' 
          . '<a href="deleteRecord.php?mode=delete&id=' . $record['professorTitleID'] .'"><img src="../deleteButton.png"/></a>' 
-         . '~ [' . $record[ 'professorTitleID' ] 
-         . ' - ' . $record[ 'titleName' ]
-         . ' - ' . $record[ 'weekTeachHours' ] 
-         . ' - ' . $record[ 'isStanding' ]
-         . ' - ' . $record[ 'otherDetails' ]
-         .  ']..' . '<a href="dualform.php?mode=update&id=' . $record['professorTitleID'] .'"><img src="../editButton.png"/></a>
+         . '~ [ ' . $record[ 'professorTitleID' ] 
+         . ' | <span class="main-coloumn">' . $record[ 'titleName' ] . '</span>'
+         . ' | ' . $record[ 'weekTeachHours' ] 
+         . ' | ' . $record[ 'isStanding' ]
+         . ' | <span>' . $record[ 'otherDetails' ]
+         .  ' ]..' . '<a href="dualform.php?mode=update&id=' . $record['professorTitleID'] .'"><img src="../editButton.png"/></a></span>
             </p>';
     }
 
-       // κλείσιμο αποτελεσμάτων ερωτήματος
-    $statement->closeCursor();
-     // κλείσιμο σύνδεσης με database
-    $pdoObject = null;
+    $statement->closeCursor();//query results closing
+    $pdoObject = null;       //database connection closing
 
    } catch (PDOException $e) {
-     //σε φάση ανάπτυξης, τυπώνουμε το πρόβλημα
+  
      echo 'PDO Exception: '.$e->getMessage();
-     //σε φάση λειτουργίας καλύτερα να τυπώσουμε κάτι λιγότερο τεχνικό
+  
    }
 ?>
 
