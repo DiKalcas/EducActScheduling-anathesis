@@ -1,0 +1,40 @@
+<?php
+ require('../parameteDB.php');
+            // specify the calling of the deletion script
+ if ( isset($_GET['mode'], $_GET['id1'], $_GET['id2'], $_GET['id3']) &&  $_GET['mode']=='delete'  ) {
+  $title= 'διαγραφή επιλεγμένης ΕΓΓΡΑΦΗΣ από πίνακα';
+  $eventPlannedCourseID=         $_GET['id1'];  //το ID της εγγραφής που θα μεταβάλλουμε
+  $scarceResourceID=              $_GET['id2'];
+  $schoolStudentGroupProfessorID=  $_GET['id3'];
+  
+ }
+         //finding of the record to be erased
+ try {  //initialization of PDObject
+  $pdoObject = new PDO("mysql:host=$dbhost;dbname=$dbname;", $dbuser, $dbpass);
+  $pdoObject -> exec('set names utf8');
+      
+  
+  $sql = " DELETE FROM eventplannedcourse_scarceresource_participantgroup_combis WHERE 
+                eventPlannedCourseID = '$eventPlannedCourseID'  
+            AND scarceResourceID = '$scarceResourceID'
+            AND schoolStudentGroupProfessorID ='$schoolStudentGroupProfessorID'  LIMIT 1 ";
+            
+       //  DELETE FROM `eduschedul`.`~~` WHERE `~~`.`~~` = 
+  if ( $statement= $pdoObject->query($sql) ) { $record_exists=true; } 
+  else                                         $record_exists=false;  // not existing record Flag state
+  // closing of query statement and clearing of PDObject
+  $statement->closeCursor();
+  $pdoObject= null;  
+ }
+ catch ( PDOException $e ) {
+  print "Database Error: " . $e->getMessage();
+      
+  die("Αδυναμία δημιουργίας PDO Object");
+ }
+     
+ if (!$record_exists) {
+  header('Location: index.php?msg=Record does not exist.');
+  exit();
+ }
+ else  header('Location: index.php?msg=Record already erased.'); 
+?>
