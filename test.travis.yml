@@ -1,3 +1,6 @@
+before_script:
+  - mysql -e 'create database eduschedul;'
+
 language: php
 php:
   - 5.4
