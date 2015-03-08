@@ -9,10 +9,16 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <title>ΑΝΑΘΕΣΗ ΕΚΠΑΙΔΕΥΤ.ΕΡΓΟΥ</title>
   <link rel="stylesheet" type="text/css" href="..\styles.css"/>
+  <script>
+   function changeScreenSize(w,h)
+     {
+       window.resizeTo( w,h )
+     }
+  </script>
 </head>
-<body>
+<body onload="changeScreenSize(1200,660)">
 
-<div class="center"><?php echo_msg(); ?></div>
+<div id="head">αναθέσεις για παραγωγή εκπαιδευτικού έργου μαθήματα ομάδων φοιτητών σε καθηγήτές</div>
 
 <div id="results">
   <p class="center">[ <b>ΠΡΟΓΡΑΜΜΑΤΙΣΜΕΝΟ ΜΑΘΗΜΑ + ΠΟΛΗ ΠΕΡΙΟΧΗ<strike> ΑΙΘΟΥΣΑ </strike>ΤΗΝ ΗΜΕΡΑ & ΩΡΑ + ΟΜΑΔΑ ΦΟΙΤΗΤΩΝ & ΚΑΘΗΓΗΤΗΣ</b> ]</p>
@@ -27,7 +33,7 @@
      // SELECT      ... αυτο ειχε βγήκε έξω 
     //   
    //       
-    $sql= ' SELECT        
+    $sql= ' SELECT eventPlaCourseScarceResouParticiGroupID,       
 `eventplannedcourse_scarceresource_participantgroup_combis`.`eventPlannedCourseID`,
 `eventplannedcourse_scarceresource_participantgroup_combis`.`scarceResourceID`,
 `eventplannedcourse_scarceresource_participantgroup_combis`.`schoolStudentGroupProfessorID`,
@@ -69,22 +75,22 @@
 
       $recoCounter++;
       echo '<p class="result">'            
-         . '<a href="deleteRecord.php?mode=delete&id1=' . $record['eventPlannedCourseID'] .'&id2=' . $record['scarceResourceID'] .'&id3=' . $record['schoolStudentGroupProfessorID'] .'"><img src="../deleteButton.png"/></a>' 
+         . '<span><a href="deleteRecord.php?mode=delete&id=' . $record['eventPlaCourseScarceResouParticiGroupID'] .'"><img src="../deleteButton.png"/></a>'
          . '~ [ ' . $record[ 'schoolSectionAbbrev' ] 
          . ' | ' . $record[ 'subjectAbbrev' ]
-         . ' | ' . $record[ 'teachMethodTitle' ]
+         . ' | ' . $record[ 'teachMethodTitle' ] .'</span>'
 
-         . ' | ' . $record[ 'city' ]
+         . '<span>' . $record[ 'city' ]
       
          . ' | ' . $record[ 'roomName' ]
          
-         . ' | ' . $record[ 'daySlotStart' ]
-         . ' | ' . $record[ 'studentGroupAbbrev' ]
-         . ' | ' . $record[ 'professorShortName' ]
+         . ' | ' . $record[ 'daySlotStart' ] .'</span>'
+         . '<span>' . $record[ 'studentGroupAbbrev' ]
+         . ' | ' . $record[ 'professorShortName' ] 
          
                    
-         .  ' ]..' . '<a href="updateform.php?mode=update&id1=' . $record['eventPlannedCourseID'] .'&id2='  . $record['scarceResourceID'] .'&id3=' . $record['schoolStudentGroupProfessorID'] .'"><img src="../editButton.png"/></a>
-            </p>';
+         .  ' ]..' . '<a href="dualform.php?mode=update&id=' . $record['eventPlaCourseScarceResouParticiGroupID'] .'"><img src="../editButton.png"/></a></span>
+         </p>';
     }
 
     $statement->closeCursor();//query results closing
@@ -97,7 +103,8 @@
    }
 ?>
 
-<p id="commands">Σύνολο <?php echo $recoCounter; ?> ΕΓΓΡΑΦΩΝ <a href="insertform.php?mode=insert">Προσθήκη ΝΕΑΣ εγγραφής</a></p>
+<p><?php echo_msg(); ?></p>
+<p id="commands"><span><a href="../pageOfAssignor.php" title="Επιστροφή στην Σελίδα του Εντολέα"><b>home&nbsp;Assignor</b></a></span>&ensp;Σύνολο <?php echo $recoCounter; ?> ΕΓΓΡΑΦΩΝ <span><a href="dualform.php?mode=insert">Προσθήκη ΝΕΑΣ εγγραφής</a></span></p>
 
 </div>
 
