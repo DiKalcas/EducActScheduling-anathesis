@@ -7,16 +7,16 @@
 <html>
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <title>ΔΙΕΥΘΗΝΣΕΙΣ-ΤΟΠΟΘΕΣΙΕΣ</title>
+  <title>ΔΙΕΥΘΥΝΣΕΙΣ-ΤΟΠΟΘΕΣΙΕΣ</title>
   <link rel="stylesheet" type="text/css" href="..\styles.css"/>
 </head>
 <body>
 
-<div class="center"><?php echo_msg(); ?></div>
+<div id="head">διευθύνσεις σχολών και καθηγητών τεχνολογικού εκπαιδευτ. ιδρύμ.</div>
 
 <div id="results">
   <p class="center">
-    id[ ΠΟΛΗ | ΠΕΡΙΟΧΗ | ΤΑΧ.ΚΩΔΙΚΟΣ | ΔΙΕΥΘΗΝΣΗ ]
+    id[ ΠΟΛΗ | ΠΕΡΙΟΧΗ | ΤΑΧ.ΚΩΔΙΚΟΣ | ΔΙΕΥΘΥΝΣΗ ]
   </p>
 
 <?php
@@ -35,14 +35,14 @@
 
       $recoCounter++;
       echo '<p class="result">' 
-         . '<a href="deleteRecord.php?mode=delete&id=' . $record['locationAddressID'] .'"><img src="../deleteButton.png"/></a>' 
-         . '~ ' . $record[ 'locationAddressID' ] 
+         . '<span><a href="deleteRecord.php?mode=delete&id=' . $record['locationAddressID'] .'"><img src="../deleteButton.png"/></a>' 
+         . '~</span>' . $record[ 'locationAddressID' ] 
          . ' [ ' . $record[ 'city' ] 
          . ' | ' . $record[ 'area' ]
          . ' | ' . $record[ 'zipPostCode' ]          
          . ' | ' . $record[ 'address' ]
 
-         .  ' ]..' . '<a href="dualform.php?mode=update&id=' . $record['locationAddressID'] .'"><img src="../editButton.png"/></a>
+         .  ' ]<span>..' . '<a href="dualform.php?mode=update&id=' . $record['locationAddressID'] .'"><img src="../editButton.png"/></a></span>
             </p>';
     }
 
@@ -55,8 +55,8 @@
     
    }
 ?>
-
-<p id="commands">Σύνολο <?php echo $recoCounter; ?> ΕΓΓΡΑΦΩΝ <a href="dualform.php?mode=insert">Προσθήκη ΝΕΑΣ εγγραφής</a></p>
+<p><?php echo_msg(); ?></p>
+<p id="commands"><span><a href="../pageOfResourcer.php" title="Επιστροφή στην Σελίδα του Συνδιαστή"><b>home&nbsp;Combiner</b></a></span>&ensp;Σύνολο <?php echo $recoCounter; ?> ΕΓΓΡΑΦΩΝ <span><a href="dualform.php?mode=insert">Προσθήκη ΝΕΑΣ εγγραφής</a></span></p>
 
 </div>
 

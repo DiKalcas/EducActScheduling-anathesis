@@ -82,7 +82,7 @@
     <h2 class="center"><?php echo $title; ?></h2>
     <br />
 
-    <fieldset><legend>Εισαγωγή ΕΓΓΡΑΦΗΣ του πίνακα των ΔΙΕΥΘΗΝΣΕΩΝ</legend>
+    <fieldset><legend>Εισαγωγή ΕΓΓΡΑΦΗΣ του πίνακα των ΔΙΕΥΘΥΝΣΕΩΝ</legend>
     <form name="form1" action="dualformhandler.php" method="post">
 
     <?php
@@ -94,9 +94,9 @@
 
     <?php     } ?>  
 
-      <p> Πόλη διεύθηνσης: (κεφ.) <input type="text" size="32"   name="city"     value="<?php echo $city; ?>" /></p>
-      <p> Περιοχή διεύθηνσης :  <input type="text"  size="48"     name="area"     value="<?php echo $area; ?>"/></p>
-      <p> Διεύθηνση τοποθεσίας:  <input type="text"  size="64"     name="address"     value="<?php echo $address; ?>"/></p>
+      <p> Πόλη διεύθυνσης: (κεφ.) <input type="text" size="32"   name="city"     value="<?php echo $city; ?>" /></p>
+      <p> Περιοχή διεύθυνσης :  <input type="text"  size="48"     name="area"     value="<?php echo $area; ?>"/></p>
+      <p> Διεύθυνση τοποθεσίας:  <input type="text"  size="64"     name="address"     value="<?php echo $address; ?>"/></p>
       <p> Ταχυδρομ. κώδικας :  <input type="text"  size="6"  placeholder="99999"   name="zipPostCode"     value="<?php echo $zipPostCode; ?>"/></p>
       <p> Επαρχία: <input type="text"  size="32"     name="province"     value="<?php echo $province; ?>"/></p>
       <p> Χώρα : <input type="text"  size="32"     name="country"     value="<?php echo $country; ?>"/></p>
@@ -107,7 +107,7 @@
     </form>
     </fieldset>
 
-    <p class="right"><a href="index.php">Αρχική Σελίδα</a></p>
+    <p class="right"><a href="index.php" title="Επιστροφή χωρίς καμία λειτουργία φόρμας"><b>go.back</b></a></p>
 
   </div>
 </body>
