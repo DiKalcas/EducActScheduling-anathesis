@@ -91,7 +91,7 @@
     <?php                            } ?>  
 
       <p>Ονομασία θέματος:            <input type="text" size="64"   name="subjectName"     value="<?php echo $subjectName; ?>" /></p>
-      <p>Περιγραφή θέματος:            <input type="text" size="88"   name="description"     value="<?php echo $description; ?>" /></p>
+      <p>Περιγραφή θέματος:            <input type="text" size="81"   name="description"     value="<?php echo $description; ?>" /></p>
       <p>Ώρες εβδομαδιαίου μαθήματος: <input type="number" size="3" name="weekTeach" value="<?php echo $weekTeach; ?>"/></p>
       
       <p>Κατηγορία:
@@ -100,14 +100,14 @@
         </select>
       </p>    
                                   
-      <p>Λεπτομέριες: <input type="text"  size="64"  name="otherDetails"   value="<?php echo $otherDetails; ?>" /></p>
+      <p>Λεπτομέρειες: <input type="text"  size="64"  name="otherDetails"   value="<?php echo $otherDetails; ?>" /></p>
                                         
       
       <p><span><input type="reset"/></span><span><input type="submit"/></span></p>
     </form>
     </fieldset>
 
-    <p class="right"><a href="index.php">Αρχική Σελίδα</a></p>
+    <p class="right"><a href="index.php" title="Επιστροφή χωρίς καμία λειτουργία φόρμας"><b>go.back</b></a></p>
 
   </div>
 </body>
