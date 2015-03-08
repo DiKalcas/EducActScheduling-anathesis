@@ -12,7 +12,7 @@
 </head>
 <body>
 
-<div class="center"><?php echo_msg(); ?></div>
+<div id="head">Λεπτομερή λίστα συνδιασμών τμήματος σχολής με μάθημα Tεχνολ.Eκπ.Iδρ.</div>
 
 <div id="results">
   <p class="center">
@@ -41,13 +41,13 @@
 
       $recoCounter++;
       echo '<p class="result">'            
-         . '<a href="deleteRecord.php?mode=delete&id=' . $record['eventPlannedCourseID'] .'"><img src="../deleteButton.png"/></a>' 
-         . '~ [ ' . $record[ 'schoolSectionName' ] 
-         . ' | ' . $record[ 'subjectName' ]
+         . '<span><a href="deleteRecord.php?mode=delete&id=' . $record['eventPlannedCourseID'] .'"><img src="../deleteButton.png"/></a>' 
+         . '~</span>[ ' . $record[ 'schoolSectionName' ] 
+         . ' | ' . $record[ 'subjectName' ] 
          . ' | ' . $record[ 'teachMethodTitle' ]
          . ' | ' . $record[ 'secretaryCode' ]
          . ' | ' . $record[ 'ECTS' ]          
-         .  ' ]..' . '<a href="updateform.php?mode=update&id=' . $record['eventPlannedCourseID'] .'"><img src="../editButton.png"/></a>
+         .  ' ]<span>..' . '<a href="updateform.php?mode=update&id=' . $record['eventPlannedCourseID'] .'"><img src="../editButton.png"/></a></span>
             </p>';
     }
 
@@ -61,7 +61,8 @@
    }
 ?>
 
-<p id="commands">Σύνολο <?php echo $recoCounter; ?> ΕΓΓΡΑΦΩΝ <a href="insertform.php?mode=insert">Προσθήκη ΝΕΑΣ εγγραφής</a></p>
+<p><?php echo_msg(); ?></p>
+<p id="commands"><span><a href="../pageOfCombiner.php" title="Επιστροφή στην Σελίδα του Συνδιαστή"><b>home&nbsp;Combiner</b></a></span>&ensp;Σύνολο <?php echo $recoCounter; ?> ΕΓΓΡΑΦΩΝ <span><a href="insertform.php?mode=insert">Προσθήκη ΝΕΑΣ εγγραφής</a></span></p>
 
 </div>
 

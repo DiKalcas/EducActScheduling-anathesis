@@ -50,7 +50,7 @@
   <p><span><input type="reset"/></span><span><input type="submit"/></span></p>
   </form>  
   </fieldset>
-  <p class="right"><a href="index.php">Αρχική Σελίδα</a></p>
+  <p class="right"><a href="index.php" title="Επιστροφή χωρίς καμία λειτουργία φόρμας"><b>go.back</b></a></p>
  </div> 
 </body>
 </html>
