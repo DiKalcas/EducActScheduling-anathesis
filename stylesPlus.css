@@ -1,0 +1,136 @@
+/* CSS Document */
+
+    body {
+    	font-family: Helvetica, Geneva, sans-serif;
+    	font-size: 10pt;
+    	color: #333;
+    }
+
+
+
+    #container {
+    	border: 2px solid #666;
+      border-radius: 3px;
+      width: 88%;
+      min-width: 600px;
+      margin: 0px auto;
+    }
+
+/* --- HEADER --------------------------------------------*/
+    #header {
+      height: 135px;
+    	background-color: #E1E1E1;
+      margin: 0;
+      padding: 0;
+      position: relative;
+    }
+
+    #header h1 {
+      color: #307FE0;
+      font-size: 40px;
+      margin:0 ;
+      padding:0 ;
+      position: absolute;
+      right: 20px;
+      top: 20px;
+    }
+
+/* --- SIDEBAR -------------------------------------------*/
+    #leftsidebar {
+      width: 200px;
+      float: left;
+      min-height: 300px;
+      padding: 10px;
+      margin: 0;
+    }
+
+    #leftsidebar ul {
+      list-style-type: none;
+      padding:0;
+      margin:0;
+    }
+
+    #leftsidebar ul li {
+      background-color: #E1E1E1;
+      border: solid thin #999;
+      height: 18px;
+      margin: 5px 0 0 0;
+      padding: 8px;
+      text-align: right;
+      font-size: 15px;
+    }
+
+    #leftsidebar ul li a {
+      text-decoration: none;
+    } 
+
+    #leftsidebar ul li a:hover {
+      font-weight: 600;
+    }
+    
+    
+            
+
+/* --- MAIN ----------------------------------------------*/
+    #main {
+      padding: 3em;
+      margin: 0 0 0 200px;
+      border-left: solid 8px #E1E1E1;
+      line-height: 130%;
+      min-height: 300px;
+    }
+
+    #main ul {
+      list-style-type: none;
+      padding:0;
+      float: left;
+      margin:0;
+    }
+
+    #main ul li {
+      background-color: #DDD;
+      border: solid #999;
+      border-radius: 5px;
+      height: 18px;
+      margin: 5px 0 0 0;
+      padding: 8px;
+      text-align: right;
+      font-size: 18px;
+      box-shadow: 3px 3px 3pc #666;      
+    }
+
+    #main ul li a {
+      text-decoration: none;
+    } 
+
+    #main ul li a:hover {
+      
+    }
+    
+    #main_notes {
+    float: right;
+    margin: 5px 0 0 0;
+    padding: 8px;
+    text-align: right;
+    }
+
+
+/* --- FOOTER --------------------------------------------*/
+    #footer {
+      clear: both;
+    	background-color: #E1E1E1;
+    	text-align:center;
+      height: 20px;
+      padding: 10px;
+      margin: 0;
+    }
+
+    #leftfooter {
+      float:left;
+    }
+
+    #rightfooter {
+      float:right;
+    }
+
+

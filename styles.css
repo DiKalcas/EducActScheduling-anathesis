@@ -1,40 +1,83 @@
 /* styles CSS Document */
 * {
-    font-family: Helvetica, Verdana, Arial, sans-serif;
+    font-family: Helvetica, Tahoma, Geneva, Verdana, Arial, sans-serif;
     font-size  :12pt; }
 
     body {
-    	font-family: Tahoma, Geneva, sans-serif;
+    	font-family: Helvetica, Tahoma, Geneva, Verdana, Arial, sans-serif;
     	font-size: 10pt;
     	color: #333;
+      
     }    
     
+    /* visited link */
+    a:visited {
+    color: #307FE0;
+    text-decoration: none;
+    }
+    
+    #head {
+    width: 1198px;
+    margin: 15px, auto, 3px,auto;
+    padding-top: 25px;
+    padding-right: 5px;
+    padding-bottom: 3px;
+    padding-left: 5px;
+    font-size: 16pt;
+    font-weight:bold;
+    color:#307FE0;
+    text-align:center;
+    float:auto;
+    }
 
     #results {
-      width: 1024px;
-      margin: 20px auto;
-      padding: 20px;
+      width: 1198px;
+      margin: 0px, auto, 20px, auto;
+      padding:20px;
       background-color: grey;
       border-radius: 8px;
-      font-family: Helvetica, Verdana, Arial, sans-serif; 
+      font-family: Helvetica, Tahoma, Geneva, Verdana, Arial, sans-serif; 
       float:auto;
                
     }
 
     .result {
       background-color: whitesmoke;
-      font-size: 0.84em;      
+      font-size: 11pt;
+      text-align: center;      
       padding: 3px 10px;
       margin: 3px 0;
       border-radius: 8px;
       
     }
 
+    span {
+    margin: 0 6px;
+    font-size: 11pt;
+        
+    }
+
+    span:first-of-type{
+    margin-left: 2;
+    float:left;
+    }
+
+    span:last-of-type{
+    margin-right: 2;
+    float:right;
+    }
+    
+    span:main-coloumn {
+    display: inline-block; width: 450px;
+    clear:inherit;
+    
+    }
+
     #commands {
-      margin: 30px 0 0 0;
+      margin: 18px 0 0 0;
       padding: 5px 15px;
       background-color: white;
-      text-align: right;
+      text-align: auto;
       border-radius: 8px;
     }
     
@@ -51,13 +94,19 @@
       
            
     }
-
     
+   
 
 
-    .center { text-align: center;
+    .center { 
               background-color: black;
-              color: white}
+              color: white;
+              font-size: 13pt;
+              text-align: center;      
+              padding: 3px 10px;
+              margin: 3px 0;
+              border-radius: 8px;
+              }
     .right { text-align: right;}
 
     h2 {
@@ -68,20 +117,3 @@
       padding: 5px 15px;
     }
     
-    span {
-    margin: 0 6px;
-        
-    }
-
-    span:first-of-type{
-    margin-left: 6;
-    }
-
-    span:last-of-type{
-    margin-right: 0;
-    float:right;
-    }
-    
-    span.main-coloumn {
-    display: inline-block; width: 450px;
-    }
