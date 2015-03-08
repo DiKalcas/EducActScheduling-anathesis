@@ -12,12 +12,13 @@
 </head>
 <body>
 
-<div class="center"><?php echo_msg(); ?></div>
+<div id="head">λίστα τίτλων των καθηγητών  τεχνολογ.εκπαιδ.ιδρύμ.</div>
+
 
 <div id="results">
-  <p class="center">
+  <p class="center"><b>
     [ ΚΩΔΙΚΟΣ | ΟΝΟΜΑΣΙΑ ΤΙΤΛΟΥ | ΩΡΕΣ ΕΒΔΟΜ. ΕΡΓΑΣΙΑΣ | ΜΟΝΙΜΟΤΗΤΑ | ΛΕΠΤΟΜΕΡΙΕΣ ]
-  </p>
+  </b></p>
 
 <?php
   require_once('..\parameteDB.php');//the database connection param.
@@ -36,13 +37,13 @@
 
       $recoCounter++;
       echo '<p class="result">' 
-         . '<a href="deleteRecord.php?mode=delete&id=' . $record['professorTitleID'] .'"><img src="../deleteButton.png"/></a>' 
-         . '~ [ ' . $record[ 'professorTitleID' ] 
-         . ' | <span class="main-coloumn">' . $record[ 'titleName' ] . '</span>'
+         . '<span><a href="deleteRecord.php?mode=delete&id=' . $record['professorTitleID'] .'"><img src="../deleteButton.png"/></a>' 
+         . '~</span>[ ' . $record[ 'professorTitleID' ] 
+         . ' | ' . $record[ 'titleName' ] 
          . ' | ' . $record[ 'weekTeachHours' ] 
          . ' | ' . $record[ 'isStanding' ]
-         . ' | <span>' . $record[ 'otherDetails' ]
-         .  ' ]..' . '<a href="dualform.php?mode=update&id=' . $record['professorTitleID'] .'"><img src="../editButton.png"/></a></span>
+         . ' | ' . $record[ 'otherDetails' ]
+         .  ' ]<span>..' . '<a href="dualform.php?mode=update&id=' . $record['professorTitleID'] .'"><img src="../editButton.png"/></a></span>
             </p>';
     }
 
@@ -56,7 +57,8 @@
    }
 ?>
 
-<p id="commands">Σύνολο <?php echo $recoCounter; ?> ΕΓΓΡΑΦΩΝ <a href="dualform.php?mode=insert">Προσθήκη ΝΕΑΣ εγγραφής</a></p>
+<p><?php echo_msg(); ?></p>
+<p id="commands"><span><a href="../pageOfResourcer.php" title="Επιστροφή στην Σελίδα Εκπαιδευτ.Πόρων"><b>home&nbsp;Respurcer</b></a></span>&ensp;Σύνολο <?php echo $recoCounter; ?> ΕΓΓΡΑΦΩΝ <span><a href="dualform.php?mode=insert">Προσθήκη ΝΕΑΣ εγγραφής</a></span></p>
 
 </div>
 
