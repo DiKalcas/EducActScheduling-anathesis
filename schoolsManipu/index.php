@@ -13,9 +13,13 @@
 
 <body>
 
+<div id="head">λίστα ενεργών τμημάτων-σχολών και έδρα τμήματος τεχνολογ.εκπαιδ.ιδρύμ.</div>
+
+
 <div id="results">
- <p class="center">
+ <p class="center"><b>
     [ id | ΟΝΟΜΑΣΙΑ ΤΜΗΜΑΤΟΣ ΣΧΟΛΗΣ ] - [ ΤΑΧ. ΚΩΔ. | ΔΙΕΥΘΗΝΣΗ | ΠΕΡΙΟΧΗ | ΠΟΛΗ | id ]
+ </b></p>
     
 <?php
  require_once('..\parameteDB.php');//the database connection param.
@@ -25,7 +29,8 @@
 
   $sql = 'SELECT schoolID, schoolSectionName, locationAddressID, city, area, address
           FROM locationaddresses INNER JOIN schools 
-          ON schools.locatAddressID_byLocationAddresses = locationaddresses.locationAddressID';
+          ON schools.locatAddressID_byLocationAddresses = locationaddresses.locationAddressID
+          ORDER BY schoolID';
 
   $statement= $pdoObject->query($sql);
 
@@ -35,14 +40,14 @@
   $recoCounter++;
   echo '<p class="result">' 
    . '<span><a href="deleteRecord.php?mode=delete&id=' . $record['schoolID'] .'"><img src="../deleteButton.png"/></a>' 
-   . '~ [ ' . $record[ 'schoolID' ] 
-   . ' | ' . $record[ 'schoolSectionName' ] . '</span>' 
-   . ' ]<span> - </span>[<span>' . $record[ 'address' ] 
+   . '~</span>[ ' . $record[ 'schoolID' ] 
+   . ' | ' . $record[ 'schoolSectionName' ] . '' 
+   . ' ] - [' . $record[ 'address' ] 
    . ' | '. $record[ 'area' ] 
    . ' | '  . $record[ 'city' ]
    . ' | ' . $record[ 'locationAddressID' ]
-   . ' ]..' . '<a href="dualform.php?mode=update&id1=' . $record['schoolID'] .'&id2=' . $record['locationAddressID'] .'"><img src="../editButton.png"/></a>
-            </span></p>';
+   . ' ]<span>..' . '<a href="dualform.php?mode=update&id1=' . $record['schoolID'] .'&id2=' . $record['locationAddressID'] .'"><img src="../editButton.png"/></a></span>
+      </p>';
   }
 
   $statement->closeCursor();//query results closing
@@ -53,15 +58,18 @@
   echo 'PDO Exception: '.$e->getMessage();
   
  }    
-?>  
+?> 
+ 
+<p><?php 
+     echo_msg(); 
+    ?>
+</p>
 
- <p id="commands"> Σύνολο <?php echo $recoCounter; ?> Εγγραφών<a href="dualform.php?mode=insert"> Προσθήκη ΝΕΑΣ εγγραφής</a></p>  
- </p>
+<p id="commands"><span><a href="../pageOfResourcer.php" title="Επιστροφή στην Σελίδα των Εκπαιδ.Πόρων"><b>home&nbsp;Resourcer</b></a></span>&ensp;Σύνολο <?php echo $recoCounter; ?> ΕΓΓΡΑΦΩΝ <span><a href="dualform.php?mode=insert">Προσθήκη ΝΕΑΣ εγγραφής</a></span></p>
+
 </div>
 
-<div><?php echo_msg(); 
-                   if( isset($_GET['lastid']) ) {echo  $_GET['lastid']; } ?>
-</div>
+
 
 </body>
 </html>
