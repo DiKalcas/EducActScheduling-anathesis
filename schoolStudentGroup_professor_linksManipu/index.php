@@ -12,7 +12,8 @@
 </head>
 <body>
 
-<div class="center"><?php echo_msg(); ?></div>
+<div id="head">λίστα συνδιασμών ομάδας φοιτητών--καθηγητής έτοιμων προς ανάθεση εκπαιδευτικού έργου</div>
+
 
 <div id="results">
   <p class="center">
@@ -26,14 +27,14 @@
     $pdoObject =new PDO("mysql:host=$dbhost; dbname=$dbname;", $dbuser, $dbpass);
     $pdoObject->exec('set names utf8');
 
-    $sql ='SELECT  schoolStudentGroupProfessorID, 
+    $sql ='SELECT  schoolStudentGroupProfessorID, schoolID, studentGroupID,
                   `schoolSectionName`,  `studentGroupName`, 
                  `professorLastName`, `professorMiddleName` ,`professorFirstName`                  
            FROM  `schools`, `studentgroups`, `schoolstudentgroup_professor_links`,  `professors` 
            WHERE `schoolID_bySchools` = `schools`.`schoolID`
               AND `studentGroupID_byStudentGroups` = `studentGroupID` 
-              AND `professorID_byProfessors` = `professorID` 
-            GROUP BY `schoolID_bySchools`, `studentGroupID_byStudentGroups` ';
+              AND `professorID_byProfessors` = `professorID`
+            ORDER BY `schoolID`,`studentGroupID`                       ';
    
     $statement= $pdoObject->query($sql);
  
@@ -42,14 +43,14 @@
 
       $recoCounter++;
       echo '<p class="result">'            
-         . '<a href="deleteRecord.php?mode=delete&id=' . $record['schoolStudentGroupProfessorID'] .'"><img src="../deleteButton.png"/></a>' 
-         . '~ [ ' . $record[ 'schoolSectionName' ] 
-         . ' | ' . $record[ 'studentGroupName' ]
+         . '<span><a href="deleteRecord.php?mode=delete&id=' . $record['schoolStudentGroupProfessorID'] .'"><img src="../deleteButton.png"/></a>' 
+         . '~</span>[ ' . $record[ 'schoolSectionName' ] 
+         . ' | ' . $record[ 'studentGroupName' ]    
          . ' | ' . $record[ 'professorLastName' ]
          . ' ' .  mb_substr($record[ 'professorMiddleName' ], 0, 1, 'UTF-8')  . '.'
          . ' ' . $record[ 'professorFirstName' ]
                    
-         .  ' ]..' . '<a href="updateform.php?mode=update&id=' . $record['schoolStudentGroupProfessorID'] .'"><img src="../editButton.png"/></a>
+         .  ' ]<span>..' . '<a href="updateform.php?mode=update&id=' . $record['schoolStudentGroupProfessorID'] .'"><img src="../editButton.png"/></a></span>
             </p>';
     }
 
@@ -63,7 +64,8 @@
    }
 ?>
 
-<p id="commands">Σύνολο <?php echo $recoCounter; ?> ΕΓΓΡΑΦΩΝ <a href="insertform.php?mode=insert">Προσθήκη ΝΕΑΣ εγγραφής</a></p>
+<p><?php echo_msg(); ?></p>
+<p id="commands"><span><a href="../pageOfCombiner.php" title="Επιστροφή στην Σελίδα του Συνδιαστή"><b>home&nbsp;Combiner</b></a></span>&ensp;Σύνολο <?php echo $recoCounter; ?> ΕΓΓΡΑΦΩΝ <span><a href="insertform.php?mode=insert">Προσθήκη ΝΕΑΣ εγγραφής</a></span></p>
 
 </div>
 
