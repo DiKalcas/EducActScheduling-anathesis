@@ -9,10 +9,17 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <title>ΑΙΘΟΥΣΑ-ΔΙΑΘΕΣΙΜΗ ΩΡΑ</title>
   <link rel="stylesheet" type="text/css" href="..\styles.css"/>
+  <script>
+   function changeScreenSize(w,h)
+     {
+       window.resizeTo( w,h )
+     }
+  </script>
 </head>
-<body>
+<body onload="changeScreenSize(1280, 660)">
 
-<div class="center"><?php echo_msg(); ?></div>
+<div id="head">λεπτομερή λίστα συνδιασμών αίθουσα-ώρα διαθέσιμων για μαθήματα τεχνολ.εκπ.ιδρ.</div>
+
 
 <div id="results">
   <p class="center">
@@ -45,17 +52,17 @@
 
       $recoCounter++;
       echo '<p class="result">'            
-         . '<a href="deleteRecord.php?mode=delete&id=' . $record['scarceResourceID'] .'"><img src="../deleteButton.png"/></a>' 
-         . '~ [ ' . $record[ 'city' ] 
+         . '<span><a href="deleteRecord.php?mode=delete&id=' . $record['scarceResourceID'] .'"><img src="../deleteButton.png"/></a>' 
+         . '~[ ' . $record[ 'city' ] 
          . ' | ' . $record[ 'area' ]
-         . ' | ' . $record[ 'address' ]         
-         . ' | ' . $record[ 'floorLevelName' ]      
+         . ' | ' . $record[ 'address' ] .'</span>'        
+         . ' ' . $record[ 'floorLevelName' ]      
          . ' | ' . $record[ 'roomName' ] 
-         . ' | ' . $record[ 'daySlotStart' ]
+         . '<span>' . $record[ 'daySlotStart' ]
          . ' | ' . $record[ 'dayName' ]           
          . ' | ' . $record[ 'slotEndNumber' ]  
          . ' | ' . $record[ 'eventTypeName' ]     
-         .  ' ]..' . '<a href="updateform.php?mode=update&id=' . $record['scarceResourceID'] .'"><img src="../editButton.png"/></a>
+         .  ' ]..' . '<a href="updateform.php?mode=update&id=' . $record['scarceResourceID'] .'"><img src="../editButton.png"/></a></span>
             </p>';
     }
 
@@ -67,9 +74,10 @@
      echo 'PDO Exception: '.$e->getMessage();
   
    }
-?>
-
-<p id="commands">Σύνολο <?php echo $recoCounter; ?> ΕΓΓΡΑΦΩΝ <a href="insertform.php?mode=insert">Προσθήκη ΝΕΑΣ εγγραφής</a></p>
+?>  
+ 
+<p><?php echo_msg(); ?></p>
+<p id="commands"><span><a href="../pageOfCombiner.php" title="Επιστροφή στην Σελίδα του Συνδιαστή"><b>home&nbsp;Combiner</b></a></span>&ensp;Σύνολο <?php echo $recoCounter; ?> ΕΓΓΡΑΦΩΝ <span><a href="insertform.php?mode=insert">Προσθήκη ΝΕΑΣ εγγραφής</a></span></p>
 
 </div>
 

@@ -5,7 +5,7 @@
 
                   //προσδιορισμός λειτουργίας φόρμας - ΠΕΡΙΠΤΩΣΗ INSERT
  if ( isset($_GET['mode'] ) &&  $_GET['mode']=='insert'  ) {
-    $title='συνδιασμ. διαθέσιμης αίθουσας σχολής ΤΕΙ την συγκεκριμένη ώρα της ημέρας';
+    $title='συνδιασμ. διαθέσιμης αίθουσας την συγκεκριμένη ώρα της ημέρας';
              //καταχωρούμε τιμές στις μεταβλητές αρχικοποίησης της φόρμας 
     $locationAddressID_byLocationAddresses=      '';
     $buildingFloorRoomID_byBuildingFloorRooms=   '';
@@ -52,7 +52,7 @@
   <p><span><input type="reset"/></span><span><input type="submit"/></span></p>
   </form>  
   </fieldset>
-  <p class="right"><a href="index.php">Αρχική Σελίδα</a></p>
+  <p class="right"><a href="index.php" title="Επιστροφή χωρίς καμία λειτουργία φόρμας"><b>go.back</b></a></p>
  </div> 
 </body>
 </html>
