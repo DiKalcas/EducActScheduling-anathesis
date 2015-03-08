@@ -16,7 +16,7 @@
                  $_POST['professorLastName'], $_POST['professorMiddleName'], $_POST['professorFirstName'],  $_POST['professorShortName'],  $_POST['professorTitleID_ofProfessorTitles'], 
                  $_POST['identityCardCode'], $_POST['nationalTaxNum'],  
                   $_POST['phoneNumber'], $_POST['emailAddress'],  $_POST['locationAddressID_ofLocationAddresses'],
-                    $_POST['jobTitleID_ofJobTitles'], $_POST['otherDetails'] ) ) { 
+                   $_POST['otherDetails'] ) ) { 
       header('Location: index.php?msg=ERROR: missing data (trying update)');
       exit();
     }  
@@ -35,8 +35,8 @@
                  $_POST['emailAddress'],  
                  $_POST['otherDetails'], 
                  $_POST['locationAddressID_ofLocationAddresses'],
-                 $_POST['professorTitleID_ofProfessorTitles'], 
-                 $_POST['jobTitleID_ofJobTitles'] ) ) { 
+                 $_POST['professorTitleID_ofProfessorTitles'] 
+                 ) ) { 
       header('Location: index.php?msg=ERROR: missing data (trying insert)');
       exit();
     }  
@@ -60,11 +60,11 @@
       $sql= ' INSERT INTO professors (professorFullName, professorLastName, professorMiddleName, professorFirstName,
                                     professorShortName, identityCardCode, nationalTaxNum, phoneNumber, emailAddress, 
                                     locationAddressID_ofLocationAddresses, professorTitleID_ofProfessorTitles,
-                                    jobTitleID_ofJobTitles, otherDetails)
+                                     otherDetails)
             VALUES              ( :professorFullName, :professorLastName, :professorMiddleName, :professorFirstName,
                                   :professorShortName, :identityCardCode, :nationalTaxNum, :phoneNumber, :emailAddress,
                                   :locationAddressID_ofLocationAddresses, :professorTitleID_ofProfessorTitles,
-                                  :jobTitleID_ofJobTitles, :otherDetails ) ';
+                                   :otherDetails ) ';
       $statement = $pdoObject->prepare($sql);
       //use the Flag to save the query result status
       $myResult= $statement->execute( array(  ':professorFullName'=>$professorFullName,
@@ -78,7 +78,7 @@
                                               ':emailAddress'=>$_POST['emailAddress'],
                                               ':locationAddressID_ofLocationAddresses'=>$_POST['locationAddressID_ofLocationAddresses'],
                                               ':professorTitleID_ofProfessorTitles'=>$_POST['professorTitleID_ofProfessorTitles'],
-                                              ':jobTitleID_ofJobTitles'=>$_POST['jobTitleID_ofJobTitles'],
+                                              
                                               ':otherDetails'=>$_POST['otherDetails']  ) );
     }
 
@@ -89,7 +89,7 @@
               professorMiddleName = :professorMiddleName,  professorFirstName = :professorFirstName, professorShortName = :professorShortName,
               identityCardCode = :identityCardCode, nationalTaxNum = :nationalTaxNum, phoneNumber = :phoneNumber, emailAddress = :emailAddress,
               locationAddressID_ofLocationAddresses = :locationAddressID_ofLocationAddresses, professorTitleID_ofProfessorTitles = :professorTitleID_ofProfessorTitles,
-              jobTitleID_ofJobTitles = :jobTitleID_ofJobTitles,  otherDetails = :otherDetails
+               otherDetails = :otherDetails
             WHERE professorID = :professorID ';
         $statement= $pdoObject->prepare($sql);
         //use the Flag to save the query result status
@@ -104,7 +104,7 @@
                                               ':emailAddress'=>$_POST['emailAddress'],
                                               ':locationAddressID_ofLocationAddresses'=>$_POST['locationAddressID_ofLocationAddresses'],
                                               ':professorTitleID_ofProfessorTitles'=>$_POST['professorTitleID_ofProfessorTitles'],
-                                              ':jobTitleID_ofJobTitles'=>$_POST['jobTitleID_ofJobTitles'],
+                                              
                                               ':otherDetails'=>$_POST['otherDetails'],
                                               ':professorID'=>$_POST[ 'professorID' ] ) );
     }

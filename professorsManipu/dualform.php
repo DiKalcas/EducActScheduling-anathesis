@@ -40,7 +40,7 @@
         $nationalTaxNum       =$record['nationalTaxNum'];
         $emailAddress       =$record['emailAddress'];        
         $locationAddressID_ofLocationAddresses=$record['locationAddressID_ofLocationAddresses'];        
-        $jobTitleID_ofJobTitles=$record[ 'jobTitleID_ofJobTitles' ];
+      
         $otherDetails         =$record['otherDetails'];
                
       } else $record_exists=false;  // not existing record Flag state
@@ -75,7 +75,7 @@
     $otherDetails      = 'άλλα ατομικά στοιχεία';
     $locationAddressID_ofLocationAddresses   = -1;
     $professorTitleID_ofProfessorTitles     = -1;
-    $jobTitleID_ofJobTitles                = -1;
+   
     
   }  
 ?>
@@ -106,7 +106,7 @@
     <?php                            } ?>  
 
       <p>Επώνυμο: (κεφαλ.)    <input type="text" size="24"   name="professorLastName"     value="<?php echo $professorLastName; ?>" /></p>
-      <p>Πατρόνυμο: (του..)  <input type="text" size="18"     name="professorMiddleName"  value="<?php echo $professorMiddleName; ?>" /></p>
+      <p>Πατρώνυμο: (του..)  <input type="text" size="18"     name="professorMiddleName"  value="<?php echo $professorMiddleName; ?>" /></p>
       <p>Όνομα :     <input type="text" size="18" name="professorFirstName"  value="<?php echo $professorFirstName; ?>"/>
          Συντομογραφία Καθηγητή: <input type="text" size="18" name="professorShortName"  value="<?php echo $professorShortName; ?>"/></p>
       <p>Ιδιότητα :
@@ -115,9 +115,9 @@
         </select>
       </p>  
       <p>Κωρικός δελτίου ταυτότ.: <input type="text"  size="11"  name="identityCardCode"  placeholder="ΖΖ 999999"  value="<?php echo $identityCardCode; ?>" /></p>
-      <p>Αριθμ. φορολογ. μητρόου: <input type="text"  size="10"  name="nationalTaxNum"  placeholder="999999999" value="<?php echo $nationalTaxNum; ?>" /></p>
+      <p>Αριθμ. Φορολογ. Μητρώου: <input type="text"  size="10"  name="nationalTaxNum"  placeholder="999999999" value="<?php echo $nationalTaxNum; ?>" /></p>
       
-      <p>Διεύθηνση κατοικίας:
+      <p>Διεύθυνση κατοικίας:
         <select name="locationAddressID_ofLocationAddresses">
           <?php load_options('locationaddresses', $locationAddressID_ofLocationAddresses) ?>
         </select>
@@ -125,21 +125,16 @@
       <p>Τηλέφωνο επικοινωνίας  : <input type="text"  size="12"  name="phoneNumber" placeholder="9999 999999" value="<?php echo $phoneNumber; ?>" /></p>
       <p>email επικοινωνίας     : <input type="text"  size="32"  name="emailAddress"   value="<?php echo $emailAddress; ?>" /></p>
       
-      
-      <p>Θέση εργασίας Τεχν.Εκπ.Ιδρ.:
-        <select name="jobTitleID_ofJobTitles">
-          <?php load_options('jobtitles', $jobTitleID_ofJobTitles) ?>
-        </select>
-      </p>    
+          
                                   
-      <p>Λεπτομέριες: <input type="text"  size="64"  name="otherDetails"   value="<?php echo $otherDetails; ?>" /></p>
+      <p>Λεπτομέρειες: <input type="text"  size="64"  name="otherDetails"   value="<?php echo $otherDetails; ?>" /></p>
                                         
       
       <p><span><input type="reset"/></span><span><input type="submit"/></span></p>
     </form>
     </fieldset>
 
-    <p class="right"><a href="index.php">Αρχική Σελίδα</a></p>
+    <p class="right"><a href="index.php" title="Επιστροφή χωρίς καμία λειτουργία φόρμας"><b>go.back</b></a></p>
 
   </div>
 </body>

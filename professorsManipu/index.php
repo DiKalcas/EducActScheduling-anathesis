@@ -12,12 +12,12 @@
 </head>
 <body>
 
-<div class="center"><?php echo_msg(); ?></div>
+<div id="head">λεπτομερή λίστα διαθέσιμων για παραγωγή εκπαιδευτικού έργου καθηγητών τεχνολ.εκπ.ιδρ.</div>
 
 <div id="results">
-  <p class="center">
-     id[ ΟΝΟΜΑΤΕΠΩΝΥΜΟ | ΤΑΥΤΟΤΗΤΑ | ΙΔΙΟΤΗΤΑ | ΑΡ.ΦΟΡΟΛ.ΜΗΤ | ΔΙΕΥΘΗΝΣΗ | ΤΗΛΕΦΩΝΟ | EMAIL | ΘΕΣΗ ΕΡΓΑΣΙΑΣ ] 
-  </p>
+  <p class="center"><b>
+     id[ ΟΝΟΜΑΤΕΠΩΝΥΜΟ | ΤΑΥΤΟΤΗΤΑ | ΙΔΙΟΤΗΤΑ | ΑΡ.ΦΟΡΟΛ.ΜΗΤ | ΔΙΕΥΘΗΝΣΗ | ΤΗΛΕΦΩΝΟ | EMAIL ] 
+  </b></p>
 
 <?php
   require_once('..\parameteDB.php');//the database connection param.
@@ -27,12 +27,12 @@
     $pdoObject->exec('set names utf8');
 
     $sql =' SELECT professorID, professorFullName, identityCardCode, titleName, nationalTaxNum,
-                   city, area, address, phoneNumber, emailAddress, jobTitleName
+                   city, area, address, phoneNumber, emailAddress
                     
               FROM professors 
                 LEFT JOIN professortitles ON professorTitleID_ofProfessorTitles = professorTitleID
                 LEFT JOIN locationaddresses ON locationAddressID_ofLocationAddresses = locationAddressID
-                LEFT JOIN jobtitles ON jobTitleID_ofJobTitles = jobTitleID
+                
           ';
     
     $statement= $pdoObject->query($sql);
@@ -42,8 +42,8 @@
 
       $recoCounter++;
       echo '<p class="result">' 
-         . '<a href="deleteRecord.php?mode=delete&id=' . $record['professorID'] .'"><img src="../deleteButton.png"/></a>' 
-         . '~ ' . $record[ 'professorID' ] 
+         . '<span><a href="deleteRecord.php?mode=delete&id=' . $record['professorID'] .'"><img src="../deleteButton.png"/></a>' 
+         . '~ ' . $record[ 'professorID' ] .'</span>' 
          . '[ ' . $record[ 'professorFullName' ]
          . ' | ' . $record[ 'identityCardCode' ]  
          . ' | ' . $record[ 'titleName' ]
@@ -52,8 +52,8 @@
          . ' | ' . $record[ 'address' ]
          . ' | ' . $record[ 'phoneNumber' ]
          . ' | ' . $record[ 'emailAddress' ]
-         . ' | ' . $record[ 'jobTitleName' ]
-         .  ' ]..' . '<a href="dualform.php?mode=update&id=' . $record['professorID'] .'"><img src="../editButton.png"/></a>
+         
+         .  ' ]<span>..' . '<a href="dualform.php?mode=update&id=' . $record['professorID'] .'"><img src="../editButton.png"/></a></span>
             </p>';
     }
 
@@ -67,7 +67,8 @@
    }
 ?>
 
-<p id="commands">Σύνολο <?php echo $recoCounter; ?> ΕΓΓΡΑΦΩΝ <a href="dualform.php?mode=insert">Προσθήκη ΝΕΑΣ εγγραφής</a></p>
+<p><?php echo_msg(); ?></p>
+<p id="commands"><span><a href="../pageOfRecruiter.php" title="Επιστροφή στην Σελίδα τοθ Στρατολογητή"><b>home&nbsp;Recruiter</b></a></span>&ensp;Σύνολο <?php echo $recoCounter; ?> ΕΓΓΡΑΦΩΝ <span><a href="dualform.php?mode=insert">Προσθήκη ΝΕΑΣ εγγραφής</a></span></p>
 
 </div>
 
