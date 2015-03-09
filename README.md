@@ -1,4 +1,4 @@
-Educational Activities Scheduling (ΑΝΑΘΕΣΕΙΣ) in gr.
+Educational Activities Scheduling (ΑΝΑΘΕΣΕΙΣ) 
 ================================
 
 Scheduling for daily activities of the institution of Educational resources is an academic project 
