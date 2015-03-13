@@ -1,5 +1,5 @@
 before_script:
-  - mysql -e 'create database eduschedul;'
+
 
    - sudo apt-get install apache2 libapache2-mod-fastcgi
    # enable php-fpm
